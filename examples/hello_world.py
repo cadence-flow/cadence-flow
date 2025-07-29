@@ -1,60 +1,47 @@
-import cadence as cd
+# In examples/hello_world.py
+
 import time
+import uuid
+import cadence_flow  # <-- CHANGED HERE
+from cadence_flow.models import TaskPlan, Step # <-- AND HERE
 
-# A simple plan defined as a dictionary for ease of use
-my_plan_dict = {
-    "plan_id": "hello_world_001",
-    "title": "Onboarding a New User",
-    "steps": [
-        {
-            "id": "s1_create_user",
-            "description": "System creates a new user account.",
-            "ui_component": "none"
-        },
-        {
-            "id": "s2_human_approval",
-            "description": "Manager approves the new user's permissions.",
-            "ui_component": "human_approval"
-        },
-        {
-            "id": "s3_send_welcome",
-            "description": "System sends a welcome email.",
-            "ui_component": "none"
-        }
-    ]
-}
+def create_greeting_plan(name: str) -> TaskPlan:
+    # Your latest model has plan_id, let's use it
+    return TaskPlan(
+        plan_id=str(uuid.uuid4()),
+        title=f"Greeting Plan for {name}",
+        steps=[
+            Step(id="s1_generate", description="Agent generates a creative greeting."),
+            Step(id="s2_approve", description="Human approves the greeting.", ui_component="human_approval"),
+            Step(id="s3_send", description="Send the approved greeting."),
+        ]
+    )
 
-def my_executor(step: cd.Step, plan: cd.TaskPlan) -> cd.Step:
-    """A simple function to execute automated steps."""
-    print(f"--- EXECUTING: {step.description} ---")
-    time.sleep(2)  # Simulate I/O work like a database call or API request
-    
-    if step.id == "s1_create_user":
-        step.result = {"user_id": "user_12345", "status": "created"}
-
-    if step.id == "s3_send_welcome":
-        step.result = {"email_status": "sent", "to": "new_user@example.com"}
-
-    step.status = "completed"
-    print(f"--- COMPLETED: {step.description} ---")
+def execute_step(step: Step, plan: TaskPlan) -> Step:
+    # This logic remains the same
+    print(f"EXECUTOR: Running step '{step.description}'...")
+    if step.id == "s1_generate":
+        time.sleep(2)
+        step.result = {"greeting": f"Hello, World! Welcome, {plan.title.split(' for ')[-1]}."}
+        step.status = "completed"
+        print("EXECUTOR: Step completed.")
+    elif step.id == "s3_send":
+        approval_step = next((s for s in plan.steps if s.id == "s2_approve"), None)
+        if approval_step and approval_step.result and approval_step.result.get("approved"):
+            print("EXECUTOR: Greeting was approved. Pretending to send it!")
+            step.status = "completed"
+        else:
+            print("EXECUTOR: Greeting was rejected. Skipping send.")
+            step.result = {"reason": "Not approved by human."}
+            step.status = "completed"
     return step
 
 if __name__ == "__main__":
-    # Cadence validates the dictionary into a Pydantic model internally
-    my_plan = cd.TaskPlan(**my_plan_dict)
+    print("--- Starting Cadence Hello World ---")
+    my_plan = create_greeting_plan("Alice")
     
-    final_plan_state = cd.run(
-        plan=my_plan,
-        executor_func=my_executor
-    )
-
-    print("\n--- WORKFLOW FINISHED ---")
-    print("Final Plan State:")
-    print(final_plan_state.model_dump_json(indent=2))
-
-    # Example of using the final state
-    approval_step = next(s for s in final_plan_state.steps if s.id == "s2_human_approval")
-    if approval_step.result and approval_step.result.get('decision') == 'approved':
-        print("\nACTION: User was approved. Welcome email sent.")
-    else:
-        print("\nACTION: User was rejected. No welcome email was sent.")
+    # The magic function call also needs the new name
+    final_plan = cadence_flow.run(plan=my_plan, executor_func=execute_step) # <-- CHANGED HERE
+    
+    print("\n--- Final Plan State ---")
+    print(final_plan.model_dump_json(indent=2))
