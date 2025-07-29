@@ -99,9 +99,6 @@ A web browser will automatically open with your interactive workflow UI!
 
 `cadence-flow` is in its very early stages. Our vision is to build a comprehensive ecosystem for human-in-the-loop AI.
 
-*   [x] **Stage 1: The "It Works" Prototype** - A functional open-source library.
-*   [ ] **Stage 2: Community & Lovability** - Polish the library, add key features (e.g., more UI components), and create integrations for LangChain/LlamaIndex.
-*   [ ] **Stage 3: Commercial Validation** - Launch a landing page and design partner program for `Cadence Cloud`, a managed platform for hosting and scaling these workflows.
 
 ## 🤝 Contributing
 
