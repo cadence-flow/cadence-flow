@@ -7,6 +7,7 @@
 <p align="center">
   <a href="https://pypi.org/project/cadence-flow/"><img alt="PyPI" src="https://img.shields.io/pypi/v/cadence-flow.svg"></a>
   <a href="https://github.com/cadence-flow/cadence-flow/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/cadence-flow"></a>
+  <a href="https://discord.gg/YourInviteCodeHere"><img alt="Discord" src="https://img.shields.io/discord/YourServerIDHere?logo=discord&label=community"></a>
 </p>
 
 ---
@@ -20,10 +21,15 @@ It's designed for developers building complex AI agents, chains, or RAG systems 
 
 ## ✨ The "Wow Moment"
 
-Define a plan of automated steps and human approval steps in Python. Then, let Cadence Flow orchestrate it in an interactive UI.
+Define a plan in Python, and let Cadence Flow orchestrate it in an interactive UI.
 
+![Cadence Flow UI](./docs/assets/ui_screenshot.png)
 
-*(Note: I've uploaded the screenshot you provided to Imgur for easy embedding. We can move this into the repo later.)*
+## ⚙️ How It Works
+
+At its core, `cadence_flow` starts a local web server and orchestrates communication between your Python script and the browser UI via WebSockets. The `run()` function blocks execution until the workflow is complete, managing the entire lifecycle.
+
+![Cadence Flow Architecture](./docs/assets/architecture_flow.png)
 
 ## 🚀 Getting Started
 
@@ -37,7 +43,7 @@ pip install cadence-flow
 
 ### 2. Your First Workflow
 
-Create a file named `my_first_flow.py` and paste the following code. This example defines a simple 3-step plan where a human must approve a generated greeting before it's "sent".
+Create a file named `my_first_flow.py` and paste the following code.
 
 ```python
 import time
@@ -87,17 +93,13 @@ if __name__ == "__main__":
 
 ### 3. Run the flow
 
-Execute the script from your terminal:
-
-```bash
-python my_first_flow.py
-```
+Execute the script from your terminal: `python my_first_flow.py`
 
 A web browser will automatically open with your interactive workflow UI!
 
 ## 🗺️ Roadmap
 
-`cadence-flow` is in its very early stages. Our vision is to build a comprehensive ecosystem for human-in-the-loop AI.
+`cadence-flow` is in its early stages. Our vision is to build a comprehensive ecosystem for human-in-the-loop AI.
 
 
 ## 🤝 Contributing
