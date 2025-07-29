@@ -1,0 +1,15 @@
+cadence-project/
+│
+├── pyproject.toml
+│
+├── cadence/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── models.py
+│   └── websocket.py
+│
+├── frontend-src/
+│   └── ... (This will be created by npm)
+│
+└── examples/
+    └── hello_world.py
