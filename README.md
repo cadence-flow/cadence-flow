@@ -23,13 +23,13 @@ It's designed for developers building complex AI agents, chains, or RAG systems 
 
 Define a plan in Python, and let Cadence Flow orchestrate it in an interactive UI.
 
-**![Cadence Flow UI Screenshot](./docs/assets/ui_screenshot.png)**
+![Cadence Flow UI Screenshot](./docs/assets/ui_screenshot.png)
 
 ## ⚙️ How It Works
 
 At its core, `cadence_flow` starts a local web server and orchestrates communication between your Python script and the browser UI via WebSockets. The `run()` function blocks execution until the workflow is complete, managing the entire lifecycle.
 
-**![Cadence Flow Architecture](./docs/assets/architecture_flow.png)**
+![Cadence Flow Architecture Diagram](./docs/assets/architecture_flow.png)
 
 ## 🚀 Getting Started
 
@@ -101,6 +101,11 @@ A web browser will automatically open with your interactive workflow UI!
 
 `cadence-flow` is in its early stages. Our vision is to build a comprehensive ecosystem for human-in-the-loop AI.
 
+## 💬 Community
+
+Have questions, ideas, or want to share what you've built?
+
+➡️ **[Join our Discord Server!](https://discord.gg/YourInviteCodeHere)**
 
 ## 🤝 Contributing
 
