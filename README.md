@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://pypi.org/project/cadence-flow/"><img alt="PyPI" src="https://img.shields.io/pypi/v/cadence-flow.svg"></a>
   <a href="https://github.com/cadence-flow/cadence-flow/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/cadence-flow"></a>
-  <a href="https://discord.gg/YourInviteCodeHere"><img alt="Discord" src="https://img.shields.io/discord/YourServerIDHere?logo=discord&label=community"></a>
+  <a href="https://discord.gg/qqVaKtce"><img alt="Discord" src="https://img.shields.io/discord/YourServerIDHere?logo=discord&label=community"></a>
 </p>
 
 ---
