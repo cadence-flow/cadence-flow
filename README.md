@@ -25,9 +25,17 @@ Define a plan in Python, and let Cadence Flow orchestrate it in an interactive U
 
 ![Cadence Flow UI Screenshot](./docs/assets/ui_screenshot.png)
 
-## ⚙️ How It Works
+## How It Works
 
-At its core, `cadence_flow` starts a local web server and orchestrates communication between your Python script and the browser UI via WebSockets. The `run()` function blocks execution until the workflow is complete, managing the entire lifecycle.
+Cadence acts as a lightweight orchestrator that runs your agent's logic, communicates with a web UI, and pauses to wait for your input.
+
+Your code defines a `TaskPlan` (a list of steps) and an `executor_func` (the logic to run for each step). `cadence-flow` takes care of the rest: starting a web server, serving the UI, and managing the state.
+
+The core interaction flow looks like this:
+
+![Cadence Core Integration Flow](docs/assets/integration_pattern_generic.png)
+
+This simple pattern allows Cadence to supervise any Python-based agent. For specific examples with popular frameworks, see our **[Integration Guides for LangChain, CrewAI, and more](./docs/integrations.md)**.
 
 ![Cadence Flow Architecture Diagram](./docs/assets/architecture_flow.png)
 
