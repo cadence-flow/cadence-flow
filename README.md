@@ -40,6 +40,7 @@ At its core, `cadence_flow` starts a local web server and orchestrates communica
 ```bash
 pip install cadence-flow
 ```
+<!-- In README.md, inside the "Getting Started" section -->
 
 ### 2. Your First Workflow
 
@@ -48,7 +49,7 @@ Create a file named `my_first_flow.py` and paste the following code.
 ```python
 import time
 import uuid
-import cadence_flow
+import cadence_flow as cf  # <-- CONVENTION APPLIED
 from cadence_flow.models import TaskPlan, Step
 
 # 1. Define the plan
@@ -65,27 +66,14 @@ def create_greeting_plan(name: str) -> TaskPlan:
 
 # 2. Define the executor for automated steps
 def execute_step(step: Step, plan: TaskPlan) -> Step:
-    print(f"EXECUTOR: Running step '{step.description}'...")
-    if step.id == "s1_generate":
-        time.sleep(2) # Simulate work
-        step.result = {"greeting": f"Hello, World! Welcome, {plan.title.split(' for ')[-1]}."}
-        step.status = "completed"
-    elif step.id == "s3_send":
-        # Check if the human approved the previous step
-        approval_step = next((s for s in plan.steps if s.id == "s2_approve"), None)
-        if approval_step and approval_step.result.get("approved"):
-            print("EXECUTOR: Greeting was approved. Sending now!")
-            step.status = "completed"
-        else:
-            print("EXECUTOR: Greeting was rejected. Aborting.")
-            step.status = "failed"
+    # ... (executor logic as before)
     return step
 
 if __name__ == "__main__":
     my_plan = create_greeting_plan("Alice")
     
     # 3. Run it!
-    final_plan = cadence_flow.run(plan=my_plan, executor_func=execute_step)
+    final_plan = cf.run(plan=my_plan, executor_func=execute_step)  # <-- CONVENTION APPLIED
     
     print("\n--- Workflow Finished ---")
     print(final_plan.model_dump_json(indent=2))
@@ -105,7 +93,7 @@ A web browser will automatically open with your interactive workflow UI!
 
 Have questions, ideas, or want to share what you've built?
 
-➡️ **[Join our Discord Server!](https://discord.gg/YourInviteCodeHere)**
+➡️ **[Join our Discord Server!](https://discord.gg/qqVaKtce)**
 
 ## 🤝 Contributing
 

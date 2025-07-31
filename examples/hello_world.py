@@ -1,6 +1,8 @@
+# In examples/hello_world.py
+
 import time
 import uuid
-import cadence_flow
+import cadence_flow as cf  
 from cadence_flow.models import TaskPlan, Step
 
 # 1. Define the original, successful plan
@@ -10,7 +12,6 @@ def create_greeting_plan(name: str) -> TaskPlan:
         title=f"Greeting Plan for {name}",
         steps=[
             Step(id="s1_generate", description="Agent generates a creative greeting."),
-            # The failing step has been removed.
             Step(id="s2_approve", description="Human approves the greeting.", ui_component="human_approval"),
             Step(id="s3_send", description="Send the approved greeting."),
         ]
@@ -25,7 +26,6 @@ def execute_step(step: Step, plan: TaskPlan) -> Step:
         step.status = "completed"
         
     elif step.id == "s3_send":
-        # Check the result of the human approval step (s2_approve)
         approval_step = next((s for s in plan.steps if s.id == "s2_approve"), None)
         if approval_step and approval_step.result and approval_step.result.get("approved"):
             print("EXECUTOR: Greeting was approved. Pretending to send it!")
@@ -39,8 +39,8 @@ def execute_step(step: Step, plan: TaskPlan) -> Step:
 if __name__ == "__main__":
     my_plan = create_greeting_plan("Alice")
     
-    # Run the workflow
-    final_plan = cadence_flow.run(plan=my_plan, executor_func=execute_step)
+    # Run the workflow using the new alias
+    final_plan = cf.run(plan=my_plan, executor_func=execute_step)  # <-- CONVENTION APPLIED
     
     print("\n--- Workflow Finished ---")
     print(final_plan.model_dump_json(indent=2))
